@@ -19,32 +19,18 @@ npm install vscode-python-extension-core
 ## Usage
 
 ```ts
-import { myPackage } from 'vscode-python-extension-core';
 
-myPackage('hello');
-//=> 'hello from my package'
 ```
 
 ## API
 
-### myPackage(input, options?)
+### commandDispatcher
 
-#### input
+### packageRunner
 
-Type: `string`
+### pythonTerminal
 
-Lorem ipsum.
-
-#### options
-
-Type: `object`
-
-##### postfix
-
-Type: `string`
-Default: `rainbows`
-
-Lorem ipsum.
+### PackageInfo
 
 [build-img]:https://github.com/34j/vscode-python-extension-core/actions/workflows/release.yml/badge.svg
 [build-url]:https://github.com/34j/vscode-python-extension-core/actions/workflows/release.yml
