@@ -1,7 +1,7 @@
 {
-  "name": "typescript-npm-package-template",
+  "name": "vscode-python-extension-core",
   "version": "0.0.0-development",
-  "description": "A template for creating npm packages using TypeScript and VSCode",
+  "description": "Utilities for creating VSCode Python extension",
   "main": "./lib/index.js",
   "files": [
     "lib/**/*"
@@ -19,13 +19,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ryansonshine/typescript-npm-package-template.git"
+    "url": "git+https://github.com/34j/vscode-python-extension-core.git"
   },
   "license": "MIT",
   "author": {
-    "name": "Ryan Sonshine",
-    "email": "ryansonshine@users.noreply.github.com",
-    "url": "https://github.com/ryansonshine"
+    "name": "34j",
+    "email": "34j@users.noreply.github.com",
+    "url": "https://github.com/34j"
   },
   "engines": {
     "node": ">=12.0"
@@ -42,12 +42,10 @@
     "codecov"
   ],
   "bugs": {
-    "url": "https://github.com/ryansonshine/typescript-npm-package-template/issues"
+    "url": "https://github.com/34j/vscode-python-extension-core/issues"
   },
-  "homepage": "https://github.com/ryansonshine/typescript-npm-package-template#readme",
+  "homepage": "https://github.com/34j/vscode-python-extension-core#readme",
   "devDependencies": {
-    "@ryansonshine/commitizen": "^4.2.8",
-    "@ryansonshine/cz-conventional-changelog": "^3.3.4",
     "@semantic-release/git": "^10.0.1",
     "@types/jest": "^27.5.2",
     "@types/node": "^12.20.11",
@@ -69,7 +67,7 @@
   },
   "config": {
     "commitizen": {
-      "path": "./node_modules/@ryansonshine/cz-conventional-changelog"
+      "path": "./node_modules/@34j/cz-conventional-changelog"
     }
   },
   "lint-staged": {
@@ -128,5 +126,8 @@
       ],
       "@semantic-release/github"
     ]
+  },
+  "dependencies": {
+    "@types/vscode": "^1.72.0"
   }
 }
