@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import assert = require('assert');
 import { IPythonTerminal } from './types';
+import { getCurrentWorkspaceFolder } from '../vscodeUtils';
 
 /**
  * Provides a properly configured vscode terminal for executing Python commands.
@@ -16,7 +17,7 @@ export class PythonVSCodeTerminal implements IPythonTerminal {
    */
   private getPythonInterpreterPath(): string {
     const interpreterPath = vscode.workspace
-      .getConfiguration('python')
+      .getConfiguration('python', getCurrentWorkspaceFolder())
       .get<string>('defaultInterpreterPath');
     if (!interpreterPath) {
       throw new ReferenceError('No python interpreter configured.');

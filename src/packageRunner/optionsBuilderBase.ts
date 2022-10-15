@@ -23,6 +23,12 @@ export class OptionsBuilderBase implements IOptionsBuilder {
   }
 
   public async build(uris: vscode.Uri[]): Promise<string[]> {
+    this._optionsBuilderHelper = new OptionsBuilderHelper(
+      vscode.workspace.getConfiguration(
+        this._packageInfo.packageConfigurationSection,
+        uris[0]
+      )
+    );
     const options = ['-m', this._packageInfo.packageName];
     if (uris.length > 0) {
       options.push(...uris.map(uri => uri.fsPath));
