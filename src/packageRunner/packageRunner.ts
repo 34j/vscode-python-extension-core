@@ -6,7 +6,7 @@ import { IOptionsBuilder, IPackageRunner } from './types';
 import { PackageInfo } from '../types';
 
 /**
- * Runs autoflake.
+ * Runs Python package.
  */
 export class PackageRunner implements IPackageRunner {
   private terminal: IPythonTerminal;
@@ -34,7 +34,7 @@ export class PackageRunner implements IPackageRunner {
   //https://github.com/microsoft/vscode-python/blob/3698950c97982f31bb9dbfc19c4cd8308acda284/src/client/common/process/proc.ts
   //Using child_process
   /**
-   * Run package for the uris based on the configuration.
+   * Run package for the uris based on the configuration. If package is not installed, show a prompt to install.
    * @param uris File paths and folder paths to run package for.
    */
   public async run(uris: vscode.Uri[]): Promise<void> {
