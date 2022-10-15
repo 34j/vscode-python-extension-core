@@ -33,7 +33,7 @@ export class OptionsBuilderHelper {
       .map(listParameter => {
         const list = this.config.get<string[]>(listParameter, []);
         if (list.length > 0) {
-          return [this.buildParameterExpression(listParameter), ...list];
+          return [this.buildParameterExpression(listParameter), list.join(',')];
         }
         return [];
       })
