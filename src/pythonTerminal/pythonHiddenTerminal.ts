@@ -12,6 +12,9 @@ export class PythonHiddenTerminal implements IPythonTerminal {
   private execCommand: string[] = [];
   private isInitialized = false;
 
+  /**
+   * @param uri Uri to get execution details for. (e.g. workspace folder)
+   */
   constructor(uri: vscode.Uri | undefined) {
     this.uri = uri;
   }

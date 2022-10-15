@@ -6,7 +6,6 @@ import { getCurrentWorkspaceFolder } from '../vscodeUtils';
 /**
  * Provides a properly configured vscode terminal for executing Python commands.
  */
-
 export class PythonVSCodeTerminal implements IPythonTerminal {
   private terminal: vscode.Terminal | undefined;
   private execCommand: string[] = [];

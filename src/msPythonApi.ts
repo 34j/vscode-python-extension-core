@@ -8,6 +8,9 @@ import * as vscode from 'vscode';
 
 type Resource = Uri | undefined;
 
+/**
+ * Api for ms-python.python extension.
+ */
 export interface IExtensionApi {
   /**
    * Promise indicating whether all parts of the extension have completed loading or not.
@@ -73,6 +76,10 @@ export interface IExtensionApi {
   };
 }
 
+/**
+ * Make sure the extension is activated and return the extension.
+ * @returns extension.
+ */
 async function getActivatedExtension(): Promise<vscode.Extension<any>> {
   const extension = vscode.extensions.getExtension('ms-python.python');
   if (extension) {

@@ -23,7 +23,9 @@ export class EasyCommandDispatcher extends BasicCommandDispatcher {
 
   public activate(): void {
     const disposable = vscode.workspace.onDidChangeConfiguration(e => {
-      if (e.affectsConfiguration('autoflake-extension.extension')) {
+      if (
+        e.affectsConfiguration(this.packageInfo.packageConfigurationSection)
+      ) {
         this.packageRunner = EasyCommandDispatcher.createPackageRunner(
           this.packageInfo,
           this.optionsBuilder

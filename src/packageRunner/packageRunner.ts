@@ -14,6 +14,12 @@ export class PackageRunner implements IPackageRunner {
   private optionsBuilder: IOptionsBuilder;
   private packageInfo: PackageInfo;
 
+  /**
+   * @param terminal Terminal to run package in.
+   * @param optionsBuilder Options builder to build options for the package.
+   * @param packageInfo Package information.
+   * @param installationTerminalProvider Function to get a terminal to install the package in if it is not installed.
+   */
   constructor(
     terminal: IPythonTerminal,
     optionsBuilder: IOptionsBuilder,

@@ -1,3 +1,6 @@
+/**
+ * Information about the Python package and VSCode configuration.
+ */
 export type PackageInfo = {
   packageName: string;
   packageDisplayName: string;
