@@ -46,19 +46,11 @@ export class EasyCommandDispatcher extends BasicCommandDispatcher {
     packageInfo: PackageInfo,
     optionsBuilder: IOptionsBuilder
   ): IPackageRunner {
+    const splitted =
+      packageInfo.useIntegratedTerminalConfigurationSectionFullName.split('.');
     const useIntegrated = vscode.workspace
-      .getConfiguration(
-        packageInfo.useIntegratedTerminalConfigurationSectionFullName
-          .split('.')
-          .slice(0, -1)
-          .join('.')
-      )
-      .get<boolean>(
-        packageInfo.useIntegratedTerminalConfigurationSectionFullName.split(
-          '.'
-        )[-1],
-        false
-      );
+      .getConfiguration(splitted.slice(0, -1).join('.'))
+      .get<boolean>(splitted[splitted.length - 1], false);
 
     console.log(`useIntegratedTerminal changed to ${useIntegrated.toString()}`);
 
