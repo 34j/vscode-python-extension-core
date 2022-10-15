@@ -1,6 +1,6 @@
 {
   "name": "vscode-python-extension-core",
-  "version": "0.0.0-development",
+  "version": "1.0.0",
   "description": "Utilities for creating VSCode Python extension",
   "main": "./lib/index.js",
   "files": [
