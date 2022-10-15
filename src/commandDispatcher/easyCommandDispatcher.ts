@@ -2,9 +2,9 @@ import * as vscode from 'vscode';
 import { PackageInfo } from '../types';
 import { IOptionsBuilder, IPackageRunner } from '../packageRunner/types';
 import { BasicCommandDispatcher } from './basicCommandDispatcher';
-import { PackageRunner } from 'src/packageRunner/packageRunner';
-import { PythonVSCodeTerminal } from 'src/pythonTerminal/pythonVSCodeTerminal';
-import { PythonHiddenTerminal } from 'src/pythonTerminal/pythonHiddenTerminal';
+import { PackageRunner } from '../packageRunner/packageRunner';
+import { PythonVSCodeTerminal } from '../pythonTerminal/pythonVSCodeTerminal';
+import { PythonHiddenTerminal } from '../pythonTerminal/pythonHiddenTerminal';
 
 export class EasyCommandDispatcher extends BasicCommandDispatcher {
   private optionsBuilder: IOptionsBuilder;
