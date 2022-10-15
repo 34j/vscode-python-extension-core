@@ -1,1 +1,3 @@
-expect(true).toBe(true);
+describe('index', () => {
+  expect(true).toBe(true);
+});
