@@ -24,7 +24,12 @@ export class EasyCommandDispatcher extends BasicCommandDispatcher {
   public activate(): void {
     const disposable = vscode.workspace.onDidChangeConfiguration(e => {
       if (
-        e.affectsConfiguration(this.packageInfo.packageConfigurationSection)
+        e.affectsConfiguration(
+          this.packageInfo.useIntegratedTerminalConfigurationSectionFullName
+            .split('.')
+            .slice(0, -1)
+            .join('.')
+        )
       ) {
         this.packageRunner = EasyCommandDispatcher.createPackageRunner(
           this.packageInfo,
