@@ -1,7 +1,7 @@
 import { PackageInfo } from '../types';
 import { IOptionsBuilder } from './types';
 import * as vscode from 'vscode';
-import { OptionsBuilderHelper } from './optionsBuilder';
+import { OptionsBuilderHelper } from './optionsBuilderHelper';
 
 /**
  * Base class to build options for a Python package. Inherit from this class to build options for a specific package.
