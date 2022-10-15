@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { IPackageInfo } from '../types';
+import { PackageInfo } from '../types';
 import { IOptionsBuilder, IPackageRunner } from '../packageRunner/types';
 import { BasicCommandDispatcher } from './basicCommandDispatcher';
 import { PackageRunner } from 'src/packageRunner/packageRunner';
@@ -10,7 +10,7 @@ export class EasyCommandDispatcher extends BasicCommandDispatcher {
   private optionsBuilder: IOptionsBuilder;
   constructor(
     context: vscode.ExtensionContext,
-    packageInfo: IPackageInfo,
+    packageInfo: PackageInfo,
     optionsBuilder: IOptionsBuilder
   ) {
     super(
@@ -36,12 +36,22 @@ export class EasyCommandDispatcher extends BasicCommandDispatcher {
   }
 
   private static createPackageRunner(
-    packageInfo: IPackageInfo,
+    packageInfo: PackageInfo,
     optionsBuilder: IOptionsBuilder
   ): IPackageRunner {
     const useIntegrated = vscode.workspace
-      .getConfiguration(packageInfo.extensionName)
-      .get<boolean>(packageInfo.useIntegratedTerminalConfigurationName, false);
+      .getConfiguration(
+        packageInfo.useIntegratedTerminalConfigurationSectionFullName
+          .split('.')
+          .slice(0, -1)
+          .join('.')
+      )
+      .get<boolean>(
+        packageInfo.useIntegratedTerminalConfigurationSectionFullName.split(
+          '.'
+        )[-1],
+        false
+      );
 
     console.log(`useIntegratedTerminal changed to ${useIntegrated.toString()}`);
 

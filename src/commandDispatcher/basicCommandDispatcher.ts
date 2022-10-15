@@ -1,7 +1,7 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
-import { IPackageInfo } from '../types';
+import { PackageInfo } from '../types';
 import { IPackageRunner } from '../packageRunner/types';
 import { ICommandDispatcher } from './types';
 
@@ -9,7 +9,7 @@ export class BasicCommandDispatcher implements ICommandDispatcher {
   private _packageInfo;
   private _packageRunner;
   private _context;
-  get packageInfo(): IPackageInfo {
+  get packageInfo(): PackageInfo {
     return this._packageInfo;
   }
   protected get packageRunner(): IPackageRunner {
@@ -27,7 +27,7 @@ export class BasicCommandDispatcher implements ICommandDispatcher {
 
   constructor(
     context: vscode.ExtensionContext,
-    packageInfo: IPackageInfo,
+    packageInfo: PackageInfo,
     packageRunner: IPackageRunner
   ) {
     this._context = context;

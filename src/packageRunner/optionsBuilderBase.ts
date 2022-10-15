@@ -1,11 +1,11 @@
-import { IPackageInfo } from '../types';
+import { PackageInfo } from '../types';
 import { IOptionsBuilder } from './types';
 import * as vscode from 'vscode';
 import { OptionsBuilderHelper } from './optionsBuilder';
 
 export class OptionsBuilderBase implements IOptionsBuilder {
-  private _packageInfo: IPackageInfo;
-  get packageInfo(): IPackageInfo {
+  private _packageInfo: PackageInfo;
+  get packageInfo(): PackageInfo {
     return this._packageInfo;
   }
   private _optionsBuilderHelper;
@@ -13,10 +13,12 @@ export class OptionsBuilderBase implements IOptionsBuilder {
     return this._optionsBuilderHelper;
   }
 
-  constructor(packageInfo: IPackageInfo) {
+  constructor(packageInfo: PackageInfo) {
     this._packageInfo = packageInfo;
     this._optionsBuilderHelper = new OptionsBuilderHelper(
-      vscode.workspace.getConfiguration(this._packageInfo.extensionName)
+      vscode.workspace.getConfiguration(
+        this._packageInfo.packageConfigurationSection
+      )
     );
   }
 

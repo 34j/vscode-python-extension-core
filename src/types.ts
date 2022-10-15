@@ -1,9 +1,9 @@
-export interface IPackageInfo {
+export type PackageInfo = {
   packageName: string;
   packageDisplayName: string;
   extensionName: string;
   runCommandName: string;
   runForWorkspaceCommandName: string;
-  packageConfigurationName: string;
-  useIntegratedTerminalConfigurationName: string;
-}
+  packageConfigurationSection: string;
+  useIntegratedTerminalConfigurationSectionFullName: string;
+};

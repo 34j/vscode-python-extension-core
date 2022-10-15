@@ -1,4 +1,4 @@
-import { IPackageInfo } from '../types';
+import { PackageInfo } from '../types';
 import * as vscode from 'vscode';
 import { OptionsBuilderBase } from './optionsBuilderBase';
 
@@ -17,7 +17,7 @@ export class EasyOptionsBuilder extends OptionsBuilderBase {
   }
 
   constructor(
-    packageInfo: IPackageInfo,
+    packageInfo: PackageInfo,
     flags: string[],
     parameters: string[],
     listParameters: string[]
