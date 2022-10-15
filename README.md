@@ -20,7 +20,6 @@ npm install vscode-python-extension-core
 
 ```ts
 
-
 ```
 
 ## API
