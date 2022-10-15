@@ -1,22 +1,46 @@
-import { IPackageInfo } from '../types';
-import { IOptionsBuilder } from './types';
 import * as vscode from 'vscode';
 
-export class OptionsBuilder implements IOptionsBuilder {
-  private _packageInfo: IPackageInfo;
-  get packageInfo(): IPackageInfo {
-    return this._packageInfo;
+export class OptionsBuilderHelper {
+  private _config: vscode.WorkspaceConfiguration;
+  get config(): vscode.WorkspaceConfiguration {
+    return this._config;
+  }
+  private _flagPrefix: string;
+  constructor(config: vscode.WorkspaceConfiguration, flagPrefix = '--') {
+    this._config = config;
+    this._flagPrefix = flagPrefix;
   }
 
-  constructor(packageInfo: IPackageInfo) {
-    this._packageInfo = packageInfo;
+  public buildFlags(flags: string[]): string[] {
+    return flags
+      .filter(flag => this.config.get<boolean>(flag, false))
+      .map(flag => this.buildParameterExpression(flag));
   }
 
-  public async build(uris: vscode.Uri[]): Promise<string[]> {
-    const options = ['-m', this._packageInfo.packageName];
-    if (uris.length > 0) {
-      options.push(...uris.map(uri => uri.fsPath));
-    }
-    return Promise.resolve(options);
+  public buildParameters(parameters: string[]): string[] {
+    return parameters
+      .map(parameter => {
+        const value = this.config.get<string | number>(parameter);
+        return value
+          ? [this.buildParameterExpression(parameter), value.toString()]
+          : [];
+      })
+      .reduce((previous, current) => previous.concat(current), []);
+  }
+
+  public buildListParameters(listParameters: string[]): string[] {
+    return listParameters
+      .map(listParameter => {
+        const list = this.config.get<string[]>(listParameter, []);
+        if (list.length > 0) {
+          return [this.buildParameterExpression(listParameter), list.join(',')];
+        }
+        return [];
+      })
+      .reduce((previous, current) => previous.concat(current), []);
+  }
+
+  public buildParameterExpression(name: string): string {
+    return this._flagPrefix + name;
   }
 }

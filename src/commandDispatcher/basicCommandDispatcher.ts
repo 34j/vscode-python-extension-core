@@ -1,26 +1,41 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
-import { IPackageInfo } from '../types';
+import { PackageInfo } from '../types';
 import { IPackageRunner } from '../packageRunner/types';
 import { ICommandDispatcher } from './types';
 
 export class BasicCommandDispatcher implements ICommandDispatcher {
   private _packageInfo;
   private _packageRunner;
-  get packageInfo(): IPackageInfo {
+  private _context;
+  get packageInfo(): PackageInfo {
     return this._packageInfo;
   }
   protected get packageRunner(): IPackageRunner {
     return this._packageRunner;
   }
+  protected set packageRunner(value: IPackageRunner) {
+    this._packageRunner = value;
+  }
+  protected get context(): vscode.ExtensionContext {
+    return this._context;
+  }
+  protected set context(value: vscode.ExtensionContext) {
+    this._context = value;
+  }
 
-  constructor(packageInfo: IPackageInfo, packageRunner: IPackageRunner) {
+  constructor(
+    context: vscode.ExtensionContext,
+    packageInfo: PackageInfo,
+    packageRunner: IPackageRunner
+  ) {
+    this._context = context;
     this._packageInfo = packageInfo;
     this._packageRunner = packageRunner;
   }
 
-  public activate(context: vscode.ExtensionContext): void {
+  public activate(): void {
     // Use the console to output diagnostic information (console.log) and errors (console.error)
     // This line of code will only be executed once when your extension is activated
     console.log(`Activating ${this._packageInfo.packageDisplayName} ...`);
@@ -59,7 +74,7 @@ export class BasicCommandDispatcher implements ICommandDispatcher {
       }
     );
 
-    context.subscriptions.push(disposable);
+    this._context.subscriptions.push(disposable);
 
     // For running autoflake for workspace folders
     disposable = vscode.commands.registerCommand(
@@ -78,7 +93,7 @@ export class BasicCommandDispatcher implements ICommandDispatcher {
       }
     );
 
-    context.subscriptions.push(disposable);
+    this._context.subscriptions.push(disposable);
 
     const runCommandName = this._packageInfo.runCommandName;
     // Register as a formatter
@@ -98,7 +113,7 @@ export class BasicCommandDispatcher implements ICommandDispatcher {
       }
     );
 
-    context.subscriptions.push(disposable);
+    this._context.subscriptions.push(disposable);
 
     console.log(`${this._packageInfo.packageDisplayName} activated.`);
   }

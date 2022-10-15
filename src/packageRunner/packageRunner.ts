@@ -3,7 +3,7 @@
 import * as vscode from 'vscode';
 import { IPythonTerminal } from '../pythonTerminal/types';
 import { IOptionsBuilder, IPackageRunner } from './types';
-import { IPackageInfo } from '../types';
+import { PackageInfo } from '../types';
 
 /**
  * Runs autoflake.
@@ -12,12 +12,12 @@ export class PackageRunner implements IPackageRunner {
   private terminal: IPythonTerminal;
   private installationTerminalProvider: () => Promise<IPythonTerminal>;
   private optionsBuilder: IOptionsBuilder;
-  private packageInfo: IPackageInfo;
+  private packageInfo: PackageInfo;
 
   constructor(
     terminal: IPythonTerminal,
     optionsBuilder: IOptionsBuilder,
-    packageInfo: IPackageInfo,
+    packageInfo: PackageInfo,
     installationTerminalProvider?: () => Promise<IPythonTerminal>
   ) {
     if (installationTerminalProvider === undefined) {
