@@ -69,7 +69,7 @@
   },
   "config": {
     "commitizen": {
-      "path": "./node_modules/@34j/cz-conventional-changelog"
+      "path": "./node_modules/@ryansonshine/cz-conventional-changelog"
     }
   },
   "lint-staged": {
