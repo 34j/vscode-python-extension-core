@@ -22,16 +22,21 @@ export class PythonHiddenTerminal implements IPythonTerminal {
   private async init() {
     const api: IExtensionApi = await getExtensionApi();
     if (api) {
-      const execCommand = api.settings.getExecutionDetails(
-        this.uri
-      ).execCommand;
-      if (execCommand) {
-        this.execCommand = execCommand;
-      } else {
-        throw new Error('Python interpreter is not configured.');
-      }
+      this.refreshExecCommand(api);
+      api.settings.onDidChangeExecutionDetails(() =>
+        this.refreshExecCommand(api)
+      );
     } else {
       throw new Error('Could not get python extension api.');
+    }
+  }
+
+  private refreshExecCommand(api: IExtensionApi) {
+    const execCommand = api.settings.getExecutionDetails(this.uri).execCommand;
+    if (execCommand) {
+      this.execCommand = execCommand;
+    } else {
+      throw new Error('Python interpreter is not configured.');
     }
   }
 
