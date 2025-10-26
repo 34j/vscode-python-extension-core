@@ -21,7 +21,7 @@ export class EasyCommandDispatcher extends BasicCommandDispatcher {
     this.optionsBuilder = optionsBuilder
   }
 
-  public activate(): void {
+  public override activate(): void {
     const disposable = vscode.workspace.onDidChangeConfiguration((e) => {
       if (
         e.affectsConfiguration(
@@ -48,9 +48,12 @@ export class EasyCommandDispatcher extends BasicCommandDispatcher {
   ): IPackageRunner {
     const split
       = packageInfo.useIntegratedTerminalConfigurationSectionFullName.split('.')
-    const useIntegrated = vscode.workspace
-      .getConfiguration(split.slice(0, -1).join('.'))
-      .get<boolean>(split[split.length - 1], false)
+    const splitLast = split[split.length - 1]
+    const useIntegrated = splitLast
+      ? (vscode.workspace
+          .getConfiguration(split.slice(0, -1).join('.'))
+          .get<boolean>(splitLast, false))
+      : false
 
     console.warn(`useIntegratedTerminal changed to ${useIntegrated.toString()}`)
 

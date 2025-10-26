@@ -57,6 +57,10 @@ export class PythonHiddenTerminal implements IPythonTerminal {
     console.warn(`Running command: ${command.join(' ')}`)
     try {
       await new Promise((resolve, reject) => {
+        if (command[0] === undefined) {
+          reject(new Error('No command to run.'))
+          return
+        }
         const child = child_process.spawn(command[0], command.slice(1), {
           shell: true,
         })

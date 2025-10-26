@@ -59,7 +59,7 @@ export class EasyOptionsBuilder extends OptionsBuilderBase {
     this._additionalOptions = additionalOptions || []
   }
 
-  public async build(uris: vscode.Uri[]): Promise<string[]> {
+  public override async build(uris: vscode.Uri[]): Promise<string[]> {
     return (await super.build(uris)).concat(
       this.optionsBuilderHelper.buildFlags(this._flags),
       this.optionsBuilderHelper.buildParameters(this._parameters),
