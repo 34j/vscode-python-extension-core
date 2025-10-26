@@ -1,7 +1,7 @@
 {
   "name": "vscode-python-extension-core",
   "type": "commonjs",
-  "version": "1.0.15",
+  "version": "1.1.0",
   "description": "Utilities for creating VSCode Python extensions",
   "author": {
     "name": "34j"
