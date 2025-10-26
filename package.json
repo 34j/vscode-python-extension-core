@@ -1,130 +1,87 @@
 {
   "name": "vscode-python-extension-core",
+  "type": "commonjs",
   "version": "1.0.15",
-  "description": "Utilities for creating VSCode Python extension",
-  "main": "./lib/index.js",
-  "files": [
-    "lib/**/*"
-  ],
-  "scripts": {
-    "build": "tsc --project tsconfig.build.json",
-    "clean": "rm -rf ./lib/",
-    "cm": "cz",
-    "lint": "eslint ./src/ --fix",
-    "prepare": "husky install",
-    "semantic-release": "semantic-release",
-    "test:watch": "jest --watch",
-    "test": "jest --coverage",
-    "typecheck": "tsc --noEmit"
+  "description": "Utilities for creating VSCode Python extensions",
+  "author": {
+    "name": "34j"
   },
+  "license": "MIT",
+  "homepage": "https://github.com/34j/vscode-python-extension-core",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/34j/vscode-python-extension-core.git"
   },
-  "license": "MIT",
-  "author": {
-    "name": "34j",
-    "email": "34j@users.noreply.github.com",
-    "url": "https://github.com/34j"
-  },
-  "engines": {
-    "node": ">=12.0"
+  "bugs": {
+    "url": "https://github.com/34j/vscode-python-extension-core/issues"
   },
   "keywords": [
     "boilerplate",
     "template",
     "typescript",
-    "vscode",
-    "jest",
-    "husky",
-    "commitizen",
+    "vitest",
+    "pre-commit",
     "semantic-release",
-    "codecov"
+    "typedoc"
   ],
-  "bugs": {
-    "url": "https://github.com/34j/vscode-python-extension-core/issues"
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "files": [
+    "dist/src/**/*"
+  ],
+  "scripts": {
+    "build:watch": "tsc --watch --project tsconfig.json",
+    "preinstall": "npx only-allow pnpm",
+    "build": "tsc --project tsconfig.json",
+    "lint": "eslint --fix",
+    "typedoc": "typedoc",
+    "typedoc:watch": "typedoc --watch",
+    "test:watch": "vitest --watch --coverage --coverage.include=src",
+    "test": "vitest --coverage --coverage.include=src",
+    "watch": "npm-run-all --race --parallel *:watch",
+    "update": "npm-check-updates -u"
   },
-  "homepage": "https://github.com/34j/vscode-python-extension-core#readme",
   "devDependencies": {
-    "@ryansonshine/commitizen": "^4.2.8",
-    "@ryansonshine/cz-conventional-changelog": "^3.3.4",
-    "@semantic-release/git": "^10.0.1",
-    "@types/jest": "^27.5.2",
-    "@types/node": "^12.20.11",
-    "@types/vscode": "^1.72.0",
-    "@typescript-eslint/eslint-plugin": "^4.22.0",
-    "@typescript-eslint/parser": "^4.22.0",
-    "conventional-changelog-conventionalcommits": "^5.0.0",
-    "eslint": "^7.25.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^3.4.0",
-    "husky": "^6.0.0",
-    "jest": "^27.2.0",
-    "lint-staged": "^10.5.4",
-    "prettier": "^2.2.1",
-    "semantic-release": "^19.0.2",
-    "ts-jest": "^27.0.5",
-    "ts-node": "^10.2.1",
-    "typescript": "^4.2.4"
+    "@antfu/eslint-config": "6.0.0",
+    "@semantic-release/changelog": "6.0.3",
+    "@semantic-release/git": "10.0.1",
+    "@tsconfig/strictest": "2.0.6",
+    "@types/node": "22.18.12",
+    "@types/vscode": "^1.105.0",
+    "@typescript-eslint/eslint-plugin": "8.46.2",
+    "@vitest/browser": "3.2.4",
+    "@vitest/coverage-v8": "3.2.4",
+    "eslint": "9.38.0",
+    "npm-run-all2": "8.0.4",
+    "playwright": "1.56.1",
+    "semantic-release": "25.0.1",
+    "ts-node": "^10.9.2",
+    "typedoc": "0.28.14",
+    "typescript": "5.9.3",
+    "vitest": "3.2.4"
   },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/@ryansonshine/cz-conventional-changelog"
-    }
-  },
-  "lint-staged": {
-    "*.ts": "eslint --cache --cache-location .eslintcache --fix"
+  "typedocOptions": {
+    "entryPoints": [
+      "src"
+    ],
+    "tsconfig": "tsconfig.json",
+    "headings": false
   },
   "release": {
-    "branches": [
-      "main"
-    ],
     "plugins": [
-      [
-        "@semantic-release/commit-analyzer",
-        {
-          "preset": "conventionalcommits",
-          "releaseRules": [
-            {
-              "type": "build",
-              "scope": "deps",
-              "release": "patch"
-            }
-          ]
-        }
-      ],
-      [
-        "@semantic-release/release-notes-generator",
-        {
-          "preset": "conventionalcommits",
-          "presetConfig": {
-            "types": [
-              {
-                "type": "feat",
-                "section": "Features"
-              },
-              {
-                "type": "fix",
-                "section": "Bug Fixes"
-              },
-              {
-                "type": "build",
-                "section": "Dependencies and Other Build Updates",
-                "hidden": false
-              }
-            ]
-          }
-        }
-      ],
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/changelog",
       "@semantic-release/npm",
       [
         "@semantic-release/git",
         {
           "assets": [
-            "package.json"
-          ],
-          "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+            "CHANGELOG.md",
+            "README.md",
+            "package.json",
+            "package-lock.json"
+          ]
         }
       ],
       "@semantic-release/github"

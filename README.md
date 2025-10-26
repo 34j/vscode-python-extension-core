@@ -8,11 +8,19 @@
 [![Commitizen Friendly][commitizen-img]][commitizen-url]
 [![Semantic Release][semantic-release-img]][semantic-release-url]
 
+---
+
+**📘Documentation**: [https://34j.github.io/vscode-python-extension-core/](https://34j.github.io/vscode-python-extension-core/)
+
+**📦️NPM Package**: [https://www.npmjs.com/package/vscode-python-extension-core](https://www.npmjs.com/package/vscode-python-extension-core)
+
+---
+
 Core package to create VSCode Python extension. Use [34j/vscode-python-extension-cookiecutter](https://github.com/34j/vscode-python-extension-cookiecutter) to create a new extension.
 
 See the above package for usage.
 
-## Install
+## Installation
 
 ```bash
 npm install vscode-python-extension-core
