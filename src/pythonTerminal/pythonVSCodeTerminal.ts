@@ -1,14 +1,15 @@
-import * as vscode from 'vscode';
-import assert = require('assert');
-import { IPythonTerminal } from './types';
-import { getCurrentWorkspaceFolder } from '../vscodeUtils';
+import type { IPythonTerminal } from './types'
+// import assert = require('assert')
+
+import * as vscode from 'vscode'
+import { getCurrentWorkspaceFolder } from '../vscodeUtils'
 
 /**
  * Provides a properly configured vscode terminal for executing Python commands.
  */
 export class PythonVSCodeTerminal implements IPythonTerminal {
-  private terminal: vscode.Terminal | undefined;
-  private execCommand: string[] = [];
+  private terminal: vscode.Terminal | undefined
+  private execCommand: string[] = []
 
   /**
    * Get the interpreter path for python.
@@ -17,11 +18,11 @@ export class PythonVSCodeTerminal implements IPythonTerminal {
   private getPythonInterpreterPath(): string {
     const interpreterPath = vscode.workspace
       .getConfiguration('python', getCurrentWorkspaceFolder())
-      .get<string>('defaultInterpreterPath');
+      .get<string>('defaultInterpreterPath')
     if (!interpreterPath) {
-      throw new ReferenceError('No python interpreter configured.');
+      throw new ReferenceError('No python interpreter configured.')
     }
-    return interpreterPath;
+    return interpreterPath
   }
 
   /**
@@ -35,13 +36,13 @@ export class PythonVSCodeTerminal implements IPythonTerminal {
     if (!this.terminal || this.terminal.exitStatus !== undefined) {
       // There should be a better way than creating new terminal every time
       // There is no way to get terminal output unless we are using vscode api, therefore we don't know if
-      // the terminal is propertly configured (e.g. activating venv)
-      await vscode.commands.executeCommand('python.createTerminal');
-      this.terminal = vscode.window.activeTerminal;
+      // the terminal is properly configured (e.g. activating venv)
+      await vscode.commands.executeCommand('python.createTerminal')
+      this.terminal = vscode.window.activeTerminal
       if (!this.terminal) {
         throw new Error(
-          'Could not create terminal. Did you install VSCode Python extension?'
-        );
+          'Could not create terminal. Did you install VSCode Python extension?',
+        )
         // But it should be installed because we have set "extensionDependencies" in package.json.
       }
     }
@@ -49,12 +50,14 @@ export class PythonVSCodeTerminal implements IPythonTerminal {
 
   public async send(options: string[], addNewLine?: boolean): Promise<void> {
     if (!this.terminal) {
-      await this.init();
-      this.execCommand = this.getPythonInterpreterPath().split(' ');
+      await this.init()
+      this.execCommand = this.getPythonInterpreterPath().split(' ')
     }
-    assert(this.terminal);
+    if (!this.terminal) {
+      throw new Error('Terminal is not initialized.')
+    }
 
-    const command = this.execCommand.concat(options);
-    this.terminal.sendText(command.join(' '), addNewLine);
+    const command = this.execCommand.concat(options)
+    this.terminal.sendText(command.join(' '), addNewLine)
   }
 }

@@ -1,21 +1,22 @@
-import * as vscode from 'vscode';
+import type * as vscode from 'vscode'
 
 /**
  * Helper class to create command line arguments from vscode Workspace Configuration.
  */
 export class OptionsBuilderHelper {
-  private _config: vscode.WorkspaceConfiguration;
+  private _config: vscode.WorkspaceConfiguration
   get config(): vscode.WorkspaceConfiguration {
-    return this._config;
+    return this._config
   }
-  private _flagPrefix: string;
+
+  private _flagPrefix: string
   /**
    * @param config Workspace Configuration.
    * @param flagPrefix Prefix of the command line arguments. e.g. '--', sometimes '-'.
    */
   constructor(config: vscode.WorkspaceConfiguration, flagPrefix = '--') {
-    this._config = config;
-    this._flagPrefix = flagPrefix;
+    this._config = config
+    this._flagPrefix = flagPrefix
   }
 
   /**
@@ -26,7 +27,7 @@ export class OptionsBuilderHelper {
   public buildFlags(flags: string[]): string[] {
     return flags
       .filter(flag => this.config.get<boolean>(flag, false))
-      .map(flag => this.buildParameterExpression(flag));
+      .map(flag => this.buildParameterExpression(flag))
   }
 
   /**
@@ -36,13 +37,13 @@ export class OptionsBuilderHelper {
    */
   public buildParameters(parameters: string[]): string[] {
     return parameters
-      .map(parameter => {
-        const value = this.config.get<string | number>(parameter);
+      .map((parameter) => {
+        const value = this.config.get<string | number>(parameter)
         return value
           ? [this.buildParameterExpression(parameter), value.toString()]
-          : [];
+          : []
       })
-      .reduce((previous, current) => previous.concat(current), []);
+      .reduce((previous, current) => previous.concat(current), [])
   }
 
   /**
@@ -52,14 +53,14 @@ export class OptionsBuilderHelper {
    */
   public buildListParameters(listParameters: string[]): string[] {
     return listParameters
-      .map(listParameter => {
-        const list = this.config.get<string[]>(listParameter, []);
+      .map((listParameter) => {
+        const list = this.config.get<string[]>(listParameter, [])
         if (list.length > 0) {
-          return [this.buildParameterExpression(listParameter), list.join(',')];
+          return [this.buildParameterExpression(listParameter), list.join(',')]
         }
-        return [];
+        return []
       })
-      .reduce((previous, current) => previous.concat(current), []);
+      .reduce((previous, current) => previous.concat(current), [])
   }
 
   /**
@@ -68,6 +69,6 @@ export class OptionsBuilderHelper {
    * @returns Expression of the parameter, e.g. '--verbose'.
    */
   public buildParameterExpression(name: string): string {
-    return this._flagPrefix + name;
+    return this._flagPrefix + name
   }
 }

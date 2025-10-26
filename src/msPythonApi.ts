@@ -3,10 +3,10 @@
  * This is the public API for other extensions to interact with this extension.
  */
 
-import { Event, Uri } from 'vscode';
-import * as vscode from 'vscode';
+import type { Event, Uri } from 'vscode'
+import * as vscode from 'vscode'
 
-type Resource = Uri | undefined;
+type Resource = Uri | undefined
 
 /**
  * Api for ms-python.python extension.
@@ -17,10 +17,10 @@ export interface IExtensionApi {
    * @type {Promise<void>}
    * @memberof IExtensionApi
    */
-  ready: Promise<void>;
+  ready: Promise<void>
   jupyter: {
-    registerHooks(): void;
-  };
+    registerHooks: () => void
+  }
   debug: {
     /**
      * Generate an array of strings for commands to pass to the Python executable to launch the debugger for remote debugging.
@@ -31,18 +31,18 @@ export interface IExtensionApi {
      * @param {boolean} [waitUntilDebuggerAttaches=true]
      * @returns {Promise<string[]>}
      */
-    getRemoteLauncherCommand(
+    getRemoteLauncherCommand: (
       host: string,
       port: number,
       waitUntilDebuggerAttaches: boolean
-    ): Promise<string[]>;
+    ) => Promise<string[]>
 
     /**
      * Gets the path to the debugger package used by the extension.
      * @returns {Promise<string>}
      */
-    getDebuggerPackagePath(): Promise<string | undefined>;
-  };
+    getDebuggerPackagePath: () => Promise<string | undefined>
+  }
   /**
    * Return internal settings within the extension which are stored in VSCode storage
    */
@@ -50,30 +50,30 @@ export interface IExtensionApi {
     /**
      * An event that is emitted when execution details (for a resource) change. For instance, when interpreter configuration changes.
      */
-    readonly onDidChangeExecutionDetails: Event<Uri | undefined>;
+    readonly onDidChangeExecutionDetails: Event<Uri | undefined>
     /**
      * Returns all the details the consumer needs to execute code within the selected environment,
      * corresponding to the specified resource taking into account any workspace-specific settings
      * for the workspace to which this resource belongs.
      * @param {Resource} [resource] A resource for which the setting is asked for.
-     * * When no resource is provided, the setting scoped to the first workspace folder is returned.
-     * * If no folder is present, it returns the global setting.
+     * When no resource is provided, the setting scoped to the first workspace folder is returned.
+     * If no folder is present, it returns the global setting.
      * @returns {({ execCommand: string[] | undefined })}
      */
-    getExecutionDetails(resource?: Resource): {
+    getExecutionDetails: (resource?: Resource) => {
       /**
        * E.g of execution commands returned could be,
-       * * `['<path to the interpreter set in settings>']`
-       * * `['<path to the interpreter selected by the extension when setting is not set>']`
-       * * `['conda', 'run', 'python']` which is used to run from within Conda environments.
+       * `['<path to the interpreter set in settings>']`
+       * `['<path to the interpreter selected by the extension when setting is not set>']`
+       * `['conda', 'run', 'python']` which is used to run from within Conda environments.
        * or something similar for some other Python environments.
        *
        * @type {(string[] | undefined)} When return value is `undefined`, it means no interpreter is set.
        * Otherwise, join the items returned using space to construct the full execution command.
        */
-      execCommand: string[] | undefined;
-    };
-  };
+      execCommand: string[] | undefined
+    }
+  }
 }
 
 /**
@@ -81,15 +81,16 @@ export interface IExtensionApi {
  * @returns extension.
  */
 async function getActivatedExtension(): Promise<vscode.Extension<any>> {
-  const extension = vscode.extensions.getExtension('ms-python.python');
+  const extension = vscode.extensions.getExtension('ms-python.python')
   if (extension) {
     if (!extension.isActive) {
-      await extension.activate();
+      await extension.activate()
     }
-  } else {
-    throw new Error('Python extension is not installed');
   }
-  return extension;
+  else {
+    throw new Error('Python extension is not installed')
+  }
+  return extension
 }
 
 /**
@@ -97,6 +98,6 @@ async function getActivatedExtension(): Promise<vscode.Extension<any>> {
  * @returns Extension API
  */
 export async function getExtensionApi(): Promise<IExtensionApi> {
-  const extension = await getActivatedExtension();
-  return extension.exports as IExtensionApi;
+  const extension = await getActivatedExtension()
+  return extension.exports as IExtensionApi
 }

@@ -1,4 +1,4 @@
-module.exports = {};
-export { IPythonTerminal } from './types';
-export { PythonVSCodeTerminal } from './pythonVSCodeTerminal';
-export { PythonHiddenTerminal } from './pythonHiddenTerminal';
+module.exports = {}
+export { PythonHiddenTerminal } from './pythonHiddenTerminal'
+export { PythonVSCodeTerminal } from './pythonVSCodeTerminal'
+export type { IPythonTerminal } from './types'
