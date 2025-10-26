@@ -1,38 +1,41 @@
-import { PackageInfo } from '../types';
-import * as vscode from 'vscode';
-import { OptionsBuilderBase } from './optionsBuilderBase';
+import type * as vscode from 'vscode'
+import type { PackageInfo } from '../types'
+import { OptionsBuilderBase } from './optionsBuilderBase'
 
 /**
  * Class to build options more easily than inheriting from OptionsBuilderBase.
  */
 export class EasyOptionsBuilder extends OptionsBuilderBase {
-  private _flags: string[];
-  private _parameters: string[];
-  private _listParameters: string[];
-  private _additionalOptions: string[];
+  private _flags: string[]
+  private _parameters: string[]
+  private _listParameters: string[]
+  private _additionalOptions: string[]
   /**
    * Flag options for the package.
    */
   protected get flags(): string[] {
-    return this._flags;
+    return this._flags
   }
+
   /**
    * Parameter options for the package.
    */
   protected get parameters(): string[] {
-    return this._parameters;
+    return this._parameters
   }
+
   /**
    * List parameter options for the package.
    */
   protected get listParameters(): string[] {
-    return this._listParameters;
+    return this._listParameters
   }
+
   /**
    * Additional options for the package.
    */
   protected get additionalOptions(): string[] {
-    return this._additionalOptions;
+    return this._additionalOptions
   }
 
   /**
@@ -47,13 +50,13 @@ export class EasyOptionsBuilder extends OptionsBuilderBase {
     flags: string[],
     parameters: string[],
     listParameters: string[],
-    additionalOptions?: string[]
+    additionalOptions?: string[],
   ) {
-    super(packageInfo);
-    this._flags = flags;
-    this._parameters = parameters;
-    this._listParameters = listParameters;
-    this._additionalOptions = additionalOptions || [];
+    super(packageInfo)
+    this._flags = flags
+    this._parameters = parameters
+    this._listParameters = listParameters
+    this._additionalOptions = additionalOptions || []
   }
 
   public async build(uris: vscode.Uri[]): Promise<string[]> {
@@ -61,7 +64,7 @@ export class EasyOptionsBuilder extends OptionsBuilderBase {
       this.optionsBuilderHelper.buildFlags(this._flags),
       this.optionsBuilderHelper.buildParameters(this._parameters),
       this.optionsBuilderHelper.buildListParameters(this._listParameters),
-      this._additionalOptions
-    );
+      this._additionalOptions,
+    )
   }
 }

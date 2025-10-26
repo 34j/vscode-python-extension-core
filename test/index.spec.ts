@@ -1,2 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-test.skip('skip', () => {});
+import { it } from 'vitest'
+
+it.skip('skip', () => {})
