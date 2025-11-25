@@ -2,7 +2,7 @@ import type { IOptionsBuilder, IPackageRunner } from '../packageRunner/types'
 import type { PackageInfo } from '../types'
 import * as vscode from 'vscode'
 import { PackageRunner } from '../packageRunner/packageRunner'
-import { PythonHiddenTerminal } from '../pythonTerminal/pythonHiddenTerminal'
+import { HiddenTerminal } from '../pythonTerminal/pythonHiddenTerminal'
 import { PythonVSCodeTerminal } from '../pythonTerminal/pythonVSCodeTerminal'
 import { BasicCommandDispatcher } from './basicCommandDispatcher'
 
@@ -60,7 +60,7 @@ export class EasyCommandDispatcher extends BasicCommandDispatcher {
     return new PackageRunner(
       useIntegrated
         ? new PythonVSCodeTerminal()
-        : new PythonHiddenTerminal(undefined),
+        : new HiddenTerminal(undefined),
       optionsBuilder,
       packageInfo,
       () => Promise.resolve(new PythonVSCodeTerminal()),
