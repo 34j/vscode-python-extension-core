@@ -2,28 +2,12 @@ import type { IPythonTerminal } from './types'
 // import assert = require('assert')
 
 import * as vscode from 'vscode'
-import { getCurrentWorkspaceFolder } from '../vscodeUtils'
 
 /**
  * Provides a properly configured vscode terminal for executing Python commands.
  */
 export class PythonVSCodeTerminal implements IPythonTerminal {
   private terminal: vscode.Terminal | undefined
-  private execCommand: string[] = []
-
-  /**
-   * Get the interpreter path for python.
-   * @returns The interpreter path.
-   */
-  private getPythonInterpreterPath(): string {
-    const interpreterPath = vscode.workspace
-      .getConfiguration('python', getCurrentWorkspaceFolder())
-      .get<string>('defaultInterpreterPath')
-    if (!interpreterPath) {
-      throw new ReferenceError('No python interpreter configured.')
-    }
-    return interpreterPath
-  }
 
   /**
    * Get a properly configured terminal for executing Python commands.
@@ -48,16 +32,14 @@ export class PythonVSCodeTerminal implements IPythonTerminal {
     }
   }
 
-  public async send(options: string[], addNewLine?: boolean): Promise<void> {
+  public async send(command: string[], addNewLine?: boolean): Promise<void> {
     if (!this.terminal) {
       await this.init()
-      this.execCommand = this.getPythonInterpreterPath().split(' ')
     }
     if (!this.terminal) {
       throw new Error('Terminal is not initialized.')
     }
 
-    const command = this.execCommand.concat(options)
     this.terminal.sendText(command.join(' '), addNewLine)
   }
 }
