@@ -60,21 +60,36 @@ export class PackageRunner implements IPackageRunner {
             await vscode.window
               .showWarningMessage(
                 `${this.packageInfo.packageDisplayName} is not installed. Install?`,
-                'Yes',
+                'pip',
+                'poetry',
+                'uv',
+                'pipx',
+                'uvx',
                 'No',
               )
               .then(async (selection) => {
-                if (selection === 'Yes') {
-                  await (
-                    await this.installationTerminalProvider()
-                  ).send([
-                    '-m',
-                    'pip',
-                    'install',
-                    '-U',
-                    this.packageInfo.packageName,
-                  ])
+                if (selection === undefined || selection === 'No') {
+                  return
                 }
+                if (selection === 'pip') {
+                  command.push('pip', 'install', '-U')
+                }
+                else if (selection === 'poetry') {
+                  command.push('poetry', 'add')
+                }
+                else if (selection === 'uv') {
+                  command.push('uv', 'add')
+                }
+                else if (selection === 'pipx') {
+                  command.push('pipx', 'install')
+                }
+                else if (selection === 'uvx') {
+                  command.push('uvx', 'tool', 'install')
+                }
+                command.push(this.packageInfo.packageName)
+                await (
+                  await this.installationTerminalProvider()
+                ).send(command)
               })
           }
           else {
