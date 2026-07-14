@@ -54,7 +54,7 @@
     "eslint": "10.6.0",
     "npm-run-all2": "9.0.2",
     "playwright": "1.61.1",
-    "semantic-release": "25.0.5",
+    "semantic-release": "25.0.6",
     "ts-node": "10.9.2",
     "typedoc": "0.28.20",
     "typescript": "5.9.3",
