@@ -47,7 +47,7 @@ export class OptionsBuilderBase implements IOptionsBuilder {
         uris[0],
       ),
     )
-    const options = ['-m', this._packageInfo.packageName]
+    const options = [this._packageInfo.packageName]
     if (uris.length > 0) {
       options.push(...uris.map(uri => `"${uri.fsPath.replace(/\\/g, '/')}"`))
     }
