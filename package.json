@@ -47,7 +47,7 @@
     "@semantic-release/git": "11.0.1",
     "@tsconfig/strictest": "2.0.8",
     "@types/node": "24.13.3",
-    "@types/vscode": "1.134.0",
+    "@types/vscode": "1.136.0",
     "@typescript-eslint/eslint-plugin": "8.69.0",
     "@vitest/browser": "3.2.7",
     "@vitest/coverage-v8": "3.2.7",
